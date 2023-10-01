@@ -1,7 +1,7 @@
 default: start
 
 project:=wide-delivery
-service:=ms-node-service
+service:=api
 NODE_ENV?=dev
 COMMIT_HASH = $(shell git rev-parse --verify HEAD)
 
