@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   api:
-    container_name: ms-node-api
+    container_name: wide-delivery-api
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wide-delivery-api.rule=PathPrefix(`/api/v1`)"
