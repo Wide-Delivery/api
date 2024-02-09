@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  client-api:
+    container_name: 'client-api'
+    build:
+      context: ./wide-delivery-workspace
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client-api.rule=Host(`widedelivery.localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.client-api.middlewares=strip-client-api-prefix"
+
+    #      - "traefik.http.routers.client-api.rule=Host(`widedelivery.localhost`) && PathPrefix(`/api`)"
+
+#      - "traefik.http.routers.client-api.rule=Host(`whoami.docker.localhost`) && PathPrefix(`/api`)"
+    ports:
+      - '3000:3000'
+    volumes:
+      - feedback:/app/feedback
+      - ./:/app:ro
+      - /app/node_modules
+      - /app/temp
+      - /app/dist
+
+volumes:
+  feedback:
+
+
+

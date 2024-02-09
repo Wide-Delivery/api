@@ -1,0 +1,21 @@
+  openapi: 3.1.0
+  info:
+    title: Wide Delivery Mobile Client API
+    version: 0.0.1
+    description: "The client API for Android app"
+    contact:
+      email: stanislavmatsak@gmail.com
+      name: Stanislav Matsak, Wide Delivery client API developer
+  paths:
+    /reservations:
+      post:
+        description: Create new reservation
+        tags:
+          - reservation
+          - order
+        requestBody:
+          -
+        content:
+          'application/json':
+            schema:
+
