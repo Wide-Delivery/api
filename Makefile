@@ -88,4 +88,3 @@ build-release:
 run-release:
 	docker run -d --name ${service}_${COMMIT_HASH} -p :5501 local/${service}:${COMMIT_HASH}
 	docker logs -f ${service}_${COMMIT_HASH}
-
