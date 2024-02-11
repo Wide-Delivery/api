@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Wide Delivery Mobile Client API
+  version: 0.0.1
+  description: "The client API for Android app"
+  contact:
+    email: stanislavmatsak@gmail.com
+    name: Stanislav Matsak, Wide Delivery client API developer
+
+servers:
+  - url: http://widedelivery.localhost/api
+
+paths:
+  /reservations:
+    post:
+      description: Create new reservation, start of picking process
+      tags:
+        - picking
+        - order
+        - reservation
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '200':
+          description: Successfully created reservation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '401':
+          description: No Auth
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: string
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    Reservation:
+      type: object
+      required:
+        - username
+      properties:
+        departureLongitude:
+          type: string
+          description: 'X of <from> point'
+        departureLatitude:
+          type: number
+          format: double
+          description: 'Y of <from> point'
+        departureTime:
+          type: string
+          description: 'Cargo should be picked up before ... in format [YYYY-MM-DDThh:mm:ss]'
+        destinationLongitude:
+          type: number
+          format: double
+          description: 'X of <to> point'
+        destinationLatitude:
+          type: number
+          format: double
+          description: 'Y of <to> point'
+        destinationTime:
+          type: string
+          description: 'Cargo should be delivered until ... in format [YYYY-MM-DDThh:mm:ss]'
+        orderCreationTime:
+          type: string
+          description: 'Order creation time in format [YYYY-MM-DDThh:mm:ss]'
+
