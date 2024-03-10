@@ -12,9 +12,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - feedback:/app/feedback
       - /app/node_modules
-      - /app/temp
       - /app/dist
       - ./:/app
 
@@ -35,8 +33,8 @@ services:
     environment:
       SWAGGER_JSON: /openapi.yaml
 
-volumes:
-  feedback:
+#volumes:
+#  feedback:
 
 
 

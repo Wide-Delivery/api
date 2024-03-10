@@ -1,8 +1,12 @@
 syntax = "proto3";
 
-import "./rpc_signin_user.proto";
-import "./rpc_signup_user.proto";
-import "./user.proto";
+//import "./rpc_signin_user.proto";
+//import "./rpc_signup_user.proto";
+//import "./user.proto";
+import "rpc_signup_user.proto";
+import "rpc_signin_user.proto";
+import "user.proto";
+import "rpc_oauth_login.proto";
 
 package auth;
 
@@ -11,11 +15,7 @@ service AuthService {
   rpc SignInUser(SignInUserInput) returns (SignInUserResponse) {}
   rpc RefreshToken(RefreshTokenInput) returns (RefreshTokenResponse) {}
   rpc GetMe(GetMeInput) returns (UserResponse) {}
-}
-
-message Point {
-  int32 latitude = 1;
-  int32 longitude = 2;
+  rpc OAuthSignIn(OAuthSignInInput) returns (SignInUserResponse) {}
 }
 
 message GetMeInput { string access_token = 1; }

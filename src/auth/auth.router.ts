@@ -1,15 +1,16 @@
 import express, {Express} from "express";
-import {registerUser} from "./auth.controller";
+import {getMe, loginOrRegisterOAuth, loginUser, registerUser} from "./auth.controller";
 import {AuthServiceClient} from "../../pb/auth/AuthService";
+import passport from "passport";
 const authRouter = express.Router();
 
 let AuthService: AuthServiceClient;
 
-authRouter.post('/register', (req, res, next) => registerUser(req, res, next, AuthService));
+authRouter.post('/register', registerUser);
+authRouter.post('/login', loginUser);
+authRouter.post('/me', passport.authenticate('bearer', { session: false }), getMe);
+authRouter.post('/oauth', loginOrRegisterOAuth);
 
-export const AuthRouter = (app: Express, authService: AuthServiceClient) => {
-    if (!AuthService) {
-        AuthService = authService;
-    }
+export const AuthRouter = (app: Express) => {
     app.use('/auth', authRouter);
 }
