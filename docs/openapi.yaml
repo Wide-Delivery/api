@@ -9,6 +9,7 @@ info:
 
 servers:
   - url: http://widedelivery.localhost/api
+  - url: client-api:3000
 
 paths:
   /reservations:

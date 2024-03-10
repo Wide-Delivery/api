@@ -25,6 +25,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.swagger.rule=Host(`docs.wd.mobile.localhost`)"
       - "traefik.http.services.swagger.loadbalancer.server.port=8080"
+      - "traefik.http.routers.swagger.middlewares=cors"
+
 #      - "traefik.http.routers.swagger.middlewares=strip-docs"
 #      - "traefik.http.routers.swagger.middlewares=docs-redirectregex"
 #      why cannot use such approach as with own node?
