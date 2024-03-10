@@ -70,6 +70,23 @@ paths:
         '500':
           description: Internal error.
 
+  /auth/me:
+      get:
+        description: Get info about user. NEED BEARER TOKEN TO PASS IN REQUEST HEADERS!
+        tags:
+          - auth
+        security:
+          - bearerAuth: [ ]
+        responses:
+          '200':
+            description: User's info.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UserSchema'
+          '500':
+            description: Internal error.
+
 
   /reservations:
     post:
@@ -184,8 +201,26 @@ components:
         refresh_token:
           type: string
           description: This token is used to receive new access_token without sign-out the user from the app.
+    UserSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User's name
+        email:
+          type: string
+          description: User's email
+        photo:
+          type: string
+          description: User's photo URL
+        phoneNumber:
+          type: string
+          description: User's phone number
+        provider:
+          type: string
+          description: User's provider (local/google) - may be needed to show visualization of current log-in method (show <you were signed-in with Google>)
 
-
-security:
-  - bearerAuth: [ ]
+#
+#security:
+#  - bearerAuth: [ ]
 

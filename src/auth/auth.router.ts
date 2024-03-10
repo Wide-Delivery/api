@@ -8,7 +8,7 @@ let AuthService: AuthServiceClient;
 
 authRouter.post('/register', registerUser);
 authRouter.post('/login', loginUser);
-authRouter.post('/me', passport.authenticate('bearer', { session: false }), getMe);
+authRouter.get('/me', passport.authenticate('bearer', { session: false }), getMe);
 authRouter.post('/oauth', loginOrRegisterOAuth);
 
 export const AuthRouter = (app: Express) => {
