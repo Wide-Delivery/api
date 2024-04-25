@@ -20,6 +20,7 @@ const initPassport = (app: Express) => {
                         access_token: token
                     }, (err: any, result: any) => {
                         if (err) {
+                            console.log(err)
                             return done(err);
                         } else {
                             console.log(result);

@@ -12,6 +12,7 @@ export interface ProtoGrpcType {
     SignUpUserInput: MessageTypeDefinition
     SignUpUserResponse: MessageTypeDefinition
     User: MessageTypeDefinition
+    UserDTO: MessageTypeDefinition
     UserResponse: MessageTypeDefinition
   }
   google: {

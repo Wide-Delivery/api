@@ -10,6 +10,7 @@ export interface ProtoGrpcType {
   auth: {
     GenericResponse: MessageTypeDefinition
     User: MessageTypeDefinition
+    UserDTO: MessageTypeDefinition
     UserResponse: MessageTypeDefinition
   }
   google: {

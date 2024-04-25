@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package order;
+
+import "google/protobuf/timestamp.proto";
+
+message Order {
+  string id = 1;
+  string user_id = 2;
+  double cargo_length = 3;
+  double cargo_width = 4;
+  double cargo_height = 5;
+  string departure_longitude = 6;
+  string departure_latitude = 7;
+  google.protobuf.Timestamp departure_time = 8;
+  string destination_longitude = 9;
+  string destination_latitude = 10;
+  google.protobuf.Timestamp destination_time = 11;
+  string description = 12;
+  bool need_loader = 13;
+  google.protobuf.Timestamp createdAt = 14;
+  google.protobuf.Timestamp updatedAt = 15;
+}
+
+message OrderResponse { Order order = 1; }
+
+message GenericResponse {
+  string status = 1;
+  string message = 2;
+}

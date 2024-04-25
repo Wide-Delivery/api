@@ -15,7 +15,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
     }, (err: any, result: any) => {
         if (err) {
             console.error(err); // todo logging
-            res.status(err.code ? RegistrationErrorsMatcher[err.code] : 500).json({ status: 'failed', message: err.message });
+            res.status(err.code ? RegistrationErrorsMatcher[err.code] : 500).json({ status: 'failed', message: err.details });
         } else {
             console.log(result); // todo logging
             res.status(201).json(result);
@@ -32,7 +32,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     }, (err: any, result: any) => {
         if (err) {
             console.error(err);
-            res.status(500).json({ code: err.code, message: err.message})
+            res.status(err.code ? RegistrationErrorsMatcher[err.code] : 500).json({ status: 'failed', message: err.details})
         } else {
             console.log(result);
             res.status(200).json(result);
@@ -48,7 +48,7 @@ export const loginOrRegisterOAuth = async (req: Request, res: Response, next: Ne
     }, (err: any, result: any) => {
         if (err) {
             console.error(err);
-            res.status(500).json({ code: err.code, message: err.message})
+            res.status(err.code ? RegistrationErrorsMatcher[err.code] : 500).json({ status: 'failed', message: err.details})
         }
         console.log(result);
         res.status(200).json(result);
@@ -61,5 +61,18 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
     const user = req.user;
     console.log('[user]', user);
     res.status(200).json(user);
+}
 
+export const refreshJwtTokens = async (req: Request, res: Response, next: NextFunction) => {
+    const { refresh_token } = req.body;
+    authService.refreshToken({
+        refresh_token: refresh_token,
+    }, (err: any, result: any) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ code: err.code, message: err.message})
+        }
+        console.log(result);
+        res.status(200).json(result);
+    })
 }

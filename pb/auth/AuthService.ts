@@ -1,4 +1,4 @@
-// Original file: protos/services.proto
+// Original file: protos/auth_service.proto
 
 import type * as grpc from '@grpc/grpc-js'
 import type { MethodDefinition } from '@grpc/proto-loader'

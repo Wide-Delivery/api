@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - USER_SERVICE_URL=user-svc:3005
+      - ORDER_SERVICE_URL=order-svc:3006
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.client-api.rule=Host(`widedelivery.localhost`) && PathPrefix(`/api`)"

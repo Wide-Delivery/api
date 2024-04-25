@@ -1,10 +1,10 @@
 import * as protoLoader from "@grpc/proto-loader";
 import * as grpc from "@grpc/grpc-js";
-import {ProtoGrpcType} from "../pb/auth_service";
+import {ProtoGrpcType} from "../pb/order_service";
 import customConfig from "../config/default";
 import path from "node:path";
 
-const PROTO_PATH = path.join(__dirname, "../protos/auth_service.proto");
+const PROTO_PATH = path.join(__dirname, "../protos/order_service.proto");
 
 const packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -16,32 +16,33 @@ const packageDefinition = protoLoader.loadSync(
     });
 
 const proto = grpc.loadPackageDefinition(packageDefinition) as unknown as ProtoGrpcType;
-const authServiceClient = new proto.auth.AuthService(customConfig.userServiceUrl,
+const orderServiceClient = new proto.order.OrderService(customConfig.orderServiceUrl,
     grpc.credentials.createInsecure());
 
-const connectAuthService = async () => {
+const connectOrderService = async () => {
     try {
         const deadline = new Date();
         deadline.setSeconds(deadline.getSeconds() + 15);
 
         const waitForConnect = () => new Promise<void>((resolve, reject) => {
-            authServiceClient.waitForReady(deadline, (err: any) => {
+            orderServiceClient.waitForReady(deadline, (err: any) => {
                 if (err) {
                     reject(err);
+                } else {
+                    console.info('[Order service is started!]');
+                    resolve();
                 }
-                console.info('[User service is started!]');
-                resolve();
             });
         });
 
         await waitForConnect();
     } catch (err: any) {
-        console.warn('Cannot connect to Auth Service');
+        console.warn('Cannot connect to Order Service');
         console.error(err.message);
         process.exit(1);
     }
 }
 
-connectAuthService();
+connectOrderService();
 
-export default authServiceClient;
+export default orderServiceClient;

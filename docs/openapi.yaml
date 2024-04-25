@@ -23,6 +23,15 @@ paths:
           'application/json':
             schema:
               $ref: '#/components/schemas/Registration'
+      responses:
+        '201':
+          description: User registered successfully.
+        '409':
+          description: Registration failed. Maybe email was used before
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandledError'
   /auth/login:
     post:
       description: Login the user. Receive access_token and refresh_token pair.
@@ -41,6 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccessTokens'
+        '401':
+          description: Email or password is incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandledError'
         '500':
           description: Internal error.
 
@@ -68,6 +83,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccessTokens'
+        '401':
+          description: OAuth token cannot be verified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandledError'
+        '500':
+          description: Internal error.
+  /auth/refresh:
+    post:
+      description: Login or register the user with OAuth token. Receive access_token and refresh_token pair.
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token, needed to receive new pair of tokens
+              example:
+                refresh_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWVkZDNhNGI1YTkzZWQyZDI0ZWQxYzEiLCJpYXQiOjE3MTI4NzI3MTMsImV4cCI6MTcxMjg3OTkxM30.hufhjto58P7QpnKJQ3jbgIz5cYCxNS4aMuB7PCKqbKWAmj3ptGt2cV6VX-p8ATX1S3qBHth1rXAvMF-zGh6Ln6UUpnxL-2MbH-2xULnSYZWOVk20HDDbMusIWA_WdEeT7k936E29Hc8vdccNm286WVgxP8GZV81uYL6900XbFLY"
+      responses:
+        '200':
+          description: New tokens received.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokens'
         '500':
           description: Internal error.
 
@@ -89,9 +136,9 @@ paths:
             description: Internal error.
 
 
-  /reservations:
+  /orders:
     post:
-      description: THIS IS EXAMPLE. CURRENTLY DON'T WORK! Create new reservation, start of picking process
+      description: Create new order
       tags:
         - picking
         - order
@@ -101,14 +148,14 @@ paths:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Reservation'
+              $ref: '#/components/schemas/Order'
       responses:
         '200':
-          description: Successfully created reservation
+          description: Successfully created order
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Reservation'
+                $ref: '#/components/schemas/Order'
         '401':
           description: No Auth
           content:
@@ -117,6 +164,38 @@ paths:
                 type: object
                 properties:
                   error: string
+  /order/{orderId}:
+    get:
+      description: Get order by ID
+      tags:
+        - picking
+        - order
+        - reservation
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+              type: string
+          required: true
+          description: String ID of the order to get
+      responses:
+        '200':
+          description: Successfully created order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          description: No Auth
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: string
+        '500':
+          description: Internal error.
+
 
 components:
   securitySchemes:
@@ -126,11 +205,29 @@ components:
       bearerFormat: JWT
 
   schemas:
-    Reservation:
+    Order:
       type: object
       required:
         - username
       properties:
+        cargoLength:
+          type: double
+          description: 'Length of the cargo'
+        cargoWidth:
+          type: double
+          description: 'Width of the cargo'
+        cargoHeight:
+          type: double
+          description: 'Height of the cargo'
+        cargoType:
+          type: string # TODO replace with custom cargo type enum
+          description: 'Type of the cargo'
+        description:
+          type: string
+          description: 'Description of the cargo and additional notes from client for the driver'
+        needLoader:
+          type: boolean
+          description: 'Does the client need an additional loader?'
         departureLongitude:
           type: string
           description: 'X of <from> point'
@@ -138,7 +235,7 @@ components:
           type: number
           format: double
           description: 'Y of <from> point'
-        departureTime:
+        departureTime: # IS NEEDED ?
           type: string
           description: 'Cargo should be picked up before ... in format [YYYY-MM-DDThh:mm:ss]'
         destinationLongitude:
@@ -149,7 +246,7 @@ components:
           type: number
           format: double
           description: 'Y of <to> point'
-        destinationTime:
+        destinationTime: # IS NEEDED ?
           type: string
           description: 'Cargo should be delivered until ... in format [YYYY-MM-DDThh:mm:ss]'
         orderCreationTime:
@@ -220,6 +317,15 @@ components:
         provider:
           type: string
           description: User's provider (local/google) - may be needed to show visualization of current log-in method (show <you were signed-in with Google>)
+    HandledError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: failed
+        message:
+          type: string
+          description: Message you can display on UI for the user.
 
 #
 #security:

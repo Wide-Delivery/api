@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "rpc_create_order.proto";
+import "order.proto";
+import "user.proto";
+
+package order;
+
+service OrderService {
+  rpc CreateOrder(CreateOrderInput) returns (CreateOrderResponse) {}
+  rpc GetOrder(GetOrderInput) returns (OrderResponse) {}
+}
+
+message GetOrderInput {
+  string order_id = 1;
+}
