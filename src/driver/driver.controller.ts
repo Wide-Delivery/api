@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import authService from '../../services/auth.service';
 import { Driver } from './driver';
 import logger from "../../logger";
@@ -10,7 +10,7 @@ import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
 import {DriverTrip} from "./trip";
 
-export const createDriver = async (req: Request, res: Response, next: NextFunction) => {
+export const createDriver = async (req: any, res: Response, next: NextFunction) => {
     // const { mayBeLoader = false, searchRadius = 10, truck } = req.body;
     // const {
     //     truckBrand,
@@ -48,7 +48,7 @@ export const createDriver = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-export const getDriverByUserId = async (req: Request, res: Response, next: NextFunction) => {
+export const getDriverByUserId = async (req: any, res: Response, next: NextFunction) => {
     const { id: userId } = req.user as { id: string };
 
     try {
@@ -114,7 +114,7 @@ const getUpdatedDriverInstance = (currentDriverInfo: Driver, updatedFields: any)
 }
 
 // Update Driver Handler
-export const updateDriver = async (req: Request, res: Response, next: NextFunction) => {
+export const updateDriver = async (req: any, res: Response, next: NextFunction) => {
     const currentDriverInfo = req.driver;
     const updatedFields = Driver.parseFromHttpBody(req.body);
 
@@ -153,7 +153,7 @@ export const updateDriver = async (req: Request, res: Response, next: NextFuncti
 };
 
 // Get Info About Driver Handler
-export const getInfoAboutDriver = async (req: Request, res: Response, next: NextFunction) => {
+export const getInfoAboutDriver = async (req: any, res: Response, next: NextFunction) => {
     if (!req.driver) {
         httpReqLogger.info('error', { req, res });
         return res.status(404).send('Driver not found');
@@ -190,7 +190,7 @@ export const getInfoAboutDriver = async (req: Request, res: Response, next: Next
 };
 
 // Get All Driver Trips Handler
-export const getAllDriverTrips = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllDriverTrips = async (req: any, res: Response, next: NextFunction) => {
     if (!req.driver) {
         httpReqLogger.info('error', {req, res});
         return res.status(404).send('Driver not found');
@@ -223,7 +223,7 @@ export const getAllDriverTrips = async (req: Request, res: Response, next: NextF
 };
 
 // Create Driver Trip Handler
-export const createDriverTrip = async (req: Request, res: Response, next: NextFunction) => {
+export const createDriverTrip = async (req: any, res: Response, next: NextFunction) => {
     if (!req.driver) {
         httpReqLogger.info('error', {req, res});
         return res.status(404).send('Driver not found');
@@ -266,7 +266,7 @@ export const createDriverTrip = async (req: Request, res: Response, next: NextFu
 };
 
 // Get Driver Trip Info Handler
-export const getDriverTripInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const getDriverTripInfo = async (req: any, res: Response, next: NextFunction) => {
     if (!req.driver) {
         httpReqLogger.info('error', { req, res });
         return res.status(404).send('Driver not found');
@@ -303,7 +303,7 @@ export const getDriverTripInfo = async (req: Request, res: Response, next: NextF
 };
 
 // Update Driver Trip Info Handler
-export const updateDriverTripInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const updateDriverTripInfo = async (req: any, res: Response, next: NextFunction) => {
     // const { id: driverId, tripId } = req.params;
     // const tripUpdateData = req.body;
     //
@@ -321,7 +321,7 @@ export const updateDriverTripInfo = async (req: Request, res: Response, next: Ne
 };
 
 // Remove Driver Trip Handler
-export const removeDriverTrip = async (req: Request, res: Response, next: NextFunction) => {
+export const removeDriverTrip = async (req: any, res: Response, next: NextFunction) => {
     // const { id: driverId, tripId } = req.params;
     //
     // try {
