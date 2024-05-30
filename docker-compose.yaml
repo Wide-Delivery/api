@@ -8,6 +8,7 @@ services:
     environment:
       - USER_SERVICE_URL=user-svc:3005
       - ORDER_SERVICE_URL=order-svc:3006
+      - NODE_ENV=docker
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.client-api.rule=Host(`widedelivery.localhost`) && PathPrefix(`/api`)"
@@ -18,6 +19,10 @@ services:
       - /app/node_modules
       - /app/dist
       - ./:/app
+      - ./logs:/var/log/app
+      - wd-client-api-logs:/var/log/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   client-apidoc:
     container_name: 'client-apidoc'
@@ -38,8 +43,9 @@ services:
     environment:
       SWAGGER_JSON: /openapi.yaml
 
-#volumes:
-#  feedback:
+volumes:
+  wd-client-api-logs:
+    name: wd-client-api-logs
 
 
 

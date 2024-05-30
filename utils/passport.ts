@@ -1,6 +1,7 @@
 import {Express} from "express";
 import passport from "passport";
 import authService from "../services/auth.service";
+import {UserDto} from "../src/dto/user.dto";
 const BearerStrategy = require('passport-http-bearer').Strategy;
 
 const initPassport = (app: Express) => {
@@ -21,10 +22,13 @@ const initPassport = (app: Express) => {
                     }, (err: any, result: any) => {
                         if (err) {
                             console.log(err)
-                            return done(err);
+                            return done({
+                                message: err.details,
+                                httpCode: 401
+                            });
                         } else {
                             console.log(result);
-                            return done(null, result.user, { scope: 'all' });
+                            return done(null, UserDto.parseFromGrpcResponse(result.user), { scope: 'all' });
                         }
                     })
 

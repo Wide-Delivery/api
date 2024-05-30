@@ -37,7 +37,7 @@ const connectOrderService = async () => {
 
         await waitForConnect();
     } catch (err: any) {
-        console.warn('Cannot connect to Order Service');
+        console.warn('Cannot connect to Order Service', customConfig.orderServiceUrl);
         console.error(err.message);
         process.exit(1);
     }

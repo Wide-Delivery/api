@@ -12,15 +12,16 @@ message CreateOrderInput {
   double cargo_length = 3;
   double cargo_width = 4;
   double cargo_height = 5;
-  string departure_longitude = 6;
-  string departure_latitude = 7;
-  google.protobuf.Timestamp departure_time = 8;
-  string destination_longitude = 9;
-  string destination_latitude = 10;
-  google.protobuf.Timestamp destination_time = 11;
-  google.protobuf.Timestamp order_creation_time = 12;
+  double cargo_weight = 6;
+  string departure_longitude = 7;
+  string departure_latitude = 8;
+  google.protobuf.Timestamp departure_time = 9;
+  string destination_longitude = 10;
+  string destination_latitude = 11;
+  google.protobuf.Timestamp destination_time = 12;
   string description = 13;
   bool need_loader = 14;
+  string payment_method = 15;
 }
 
 message CreateOrderResponse { Order order = 1; }
