@@ -8,6 +8,7 @@ services:
     environment:
       - USER_SERVICE_URL=user-svc:3005
       - ORDER_SERVICE_URL=order-svc:3006
+      - DRIVER_SERVICE_URL=driver-svc:3007
       - NODE_ENV=docker
     labels:
       - "traefik.enable=true"

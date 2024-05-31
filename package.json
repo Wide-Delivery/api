@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "npm run build && cp dist/protos dist/protos -r && node dist/src/index.js",
-    "dev": "npm run build && nodemon --ignore ./logs/ src/index.ts"
+    "start": "npm run build && cp ./protos dist/protos -r && node dist/src/index.js",
+    "dev": "npm run build && nodemon --ignore ./logs/ --files src/index.ts"
   },
   "keywords": [],
   "author": "",

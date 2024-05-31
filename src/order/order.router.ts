@@ -1,4 +1,4 @@
-import express, {Express} from "express";
+import express, {Express, Response, Request, NextFunction} from "express";
 import passport from "passport";
 import {createOrder, getOrder} from "./order.controller";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
@@ -10,7 +10,7 @@ ordersRouter.post('/', createOrder);
 ordersRouter.get('/:orderId', getOrder);
 // ordersRouter.post('/:orderId/rate', rateOrder);
 
-const orderServiceErrorHandler = (err: any, req: any, res: any, next: any) => {
+const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     console.error('[ORDER SERVICE]', err);
     if (err.code) {
         if (err.code === 14) {

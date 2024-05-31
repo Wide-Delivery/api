@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from "express";
 import {Driver} from "./driver";
 import driverService from "../../services/driver.service";
 
-export const driverAuth = async (req: any, res: Response, next: NextFunction) => {
+export const driverAuth = async (req: Request, res: Response, next: NextFunction) => {
     const { id: userId } = req.user as { id: string };
 
     try {
