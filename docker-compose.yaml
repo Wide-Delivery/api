@@ -16,6 +16,7 @@ services:
       - "traefik.http.routers.client-api.middlewares=strip-client-api-prefix"
     ports:
       - '3000:3000'
+      - '3020:3020'
     volumes:
       - /app/node_modules
       - /app/dist
