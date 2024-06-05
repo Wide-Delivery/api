@@ -16,7 +16,7 @@ const packageDefinition = protoLoader.loadSync(
     });
 
 const proto = grpc.loadPackageDefinition(packageDefinition) as unknown as ProtoGrpcType;
-const driverServiceClient = new proto.driver.DriverService(customConfig.driverServiceUrl,
+const driverServiceClient = new proto.com.widedelivery.driver.service.DriverService(customConfig.driverServiceUrl,
     grpc.credentials.createInsecure());
 
 const connectDriverService = async () => {

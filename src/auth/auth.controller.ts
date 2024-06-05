@@ -3,6 +3,7 @@ import authService from "../../services/auth.service";
 import {AUTH_PROVIDERS} from "../../constants/auth-constants";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
+import {UserDto} from "../dto/user.dto";
 
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +24,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
                 });
             } else {
                 console.log(result); // todo logging
-                res.status(201).json(result);
+                res.status(201).json(UserDto.parseFromGrpcResponse(result.user));
             }
         })
     } catch (e) {

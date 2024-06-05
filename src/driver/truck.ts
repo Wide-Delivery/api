@@ -1,4 +1,4 @@
-import {Truck__Output} from "../../pb/driver/Truck";
+import {Truck__Output} from "../../pb/com/widedelivery/driver/proto/Truck";
 
 export enum TrackType {
     SMALL= "SMALL",

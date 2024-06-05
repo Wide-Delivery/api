@@ -3,6 +3,10 @@ import orderService from "../../services/order.service";
 import {UserDto} from "../dto/user.dto";
 import {OrderDto} from "../dto/order.dto";
 import httpReqLogger from "../../logger";
+import {NotificationService} from "../notification-service";
+import {OrderEmailNotifications} from "./order.emails";
+import {OrderService} from "./order.service";
+import {DriverDto} from "../dto/driver.dto";
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     const {
@@ -56,19 +60,27 @@ export const getOrder = async (req: Request, res: Response, next: NextFunction) 
     const { orderId } = req.params;
     // todo validate if all exists (mb with middleware)
     try {
-        orderService.getOrder({
-            order_id: orderId
-        }, (err: any, result: any) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ code: err.code, message: err.message})
-            } else {
-                console.log(result);
-                res.status(200).json(OrderDto.parseFromGrpcResponse(result.order));
-            }
-        })
+        const order = await OrderService.getOrderById(orderId);
+        res.status(200).json(order);
     } catch (e)
     {
         next(e)
     }
+}
+
+
+export const linkDriverToOrder = async (req: Request, res: Response, next: NextFunction) => {
+    const driver = new UserDto({
+        email: 'ginger0330190+driver@gmail.com',
+        name: 'Олексій',
+        phoneNumber: '+380123456789',
+    });
+    const user = new UserDto({
+        email: 'ginger0330190+user@gmail.com',
+        name: 'Станіслав',
+        phoneNumber: '+380123456789',
+    });
+    const order = await OrderService.getOrderById('6658cc534740761554fad9ed');
+    await OrderEmailNotifications.sendDriverWasLinkedToOrderEmail(order, driver, user);
+    res.status(200).send();
 }

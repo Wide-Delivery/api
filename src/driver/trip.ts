@@ -1,6 +1,6 @@
-import * as ProtoDriverTrip from "../../pb/driver/DriverTrip";
+import * as ProtoDriverTrip from "../../pb/com/widedelivery/driver/proto/DriverTrip";
 import {OrderDto} from "../dto/order.dto";
-import {CreateDriverTripInput} from "../../pb/driver/CreateDriverTripInput";
+import {CreateDriverTripInput} from "../../pb/com/widedelivery/driver/proto/CreateDriverTripInput";
 
 export class DriverTrip {
     public tripId: string;

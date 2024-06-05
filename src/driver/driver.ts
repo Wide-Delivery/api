@@ -1,5 +1,5 @@
 import {Truck} from "./truck";
-import * as ProtoDriver from "../../pb/driver/Driver";
+import * as ProtoDriver from "../../pb/com/widedelivery/driver/proto/Driver";
 
 export class PreCreatedDriver {
     public userId: string;

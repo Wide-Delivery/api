@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import initPassport from "../utils/passport";
 import httpReqLogger from "../logger";
 import errorHandler from "./middleware/error-handler";
+import {startWebSocketServer} from "./ws-server";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -28,3 +29,7 @@ app.use(errorHandler);
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
+startWebSocketServer();
+
+export default app;

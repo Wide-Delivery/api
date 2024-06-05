@@ -5,7 +5,6 @@ import logger from "../../logger";
 import {DriverDto} from "../dto/driver.dto";
 import driverService from "../../services/driver.service";
 import * as grpc from "@grpc/grpc-js";
-import {Driver__Output} from "../../pb/driver/Driver";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
 import {DriverTrip} from "./trip";

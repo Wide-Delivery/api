@@ -1,18 +1,18 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.widedelivery.driver.proto";
+option java_package = "com.widedelivery.order.proto";
 
-package driver;
+package com.widedelivery.order.proto;
 
 import "order.proto";
 
 message GetMatchedOrdersInput {
-
+  string driver_id = 1;
 }
 
 
 message GetMatchedOrdersOutput {
-  order.Order order = 1;
+  Order order = 1;
 }
 

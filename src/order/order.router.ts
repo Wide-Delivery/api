@@ -1,6 +1,6 @@
 import express, {Express, Response, Request, NextFunction} from "express";
 import passport from "passport";
-import {createOrder, getOrder} from "./order.controller";
+import {createOrder, getOrder, linkDriverToOrder} from "./order.controller";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
 
@@ -8,7 +8,7 @@ const ordersRouter = express.Router();
 
 ordersRouter.post('/', createOrder);
 ordersRouter.get('/:orderId', getOrder);
-// ordersRouter.post('/:orderId/rate', rateOrder);
+ordersRouter.put('/:orderId/accept', linkDriverToOrder);
 
 const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     console.error('[ORDER SERVICE]', err);

@@ -1,4 +1,4 @@
-import {Order} from "../../pb/order/Order";
+import {Order} from "../../pb/com/widedelivery/order/proto/Order";
 
 export class OrderDto {
     public id: string;

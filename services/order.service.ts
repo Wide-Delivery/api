@@ -16,7 +16,7 @@ const packageDefinition = protoLoader.loadSync(
     });
 
 const proto = grpc.loadPackageDefinition(packageDefinition) as unknown as ProtoGrpcType;
-const orderServiceClient = new proto.order.OrderService(customConfig.orderServiceUrl,
+const orderServiceClient = new proto.com.widedelivery.order.service.OrderService(customConfig.orderServiceUrl,
     grpc.credentials.createInsecure());
 
 const connectOrderService = async () => {
