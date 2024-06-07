@@ -42,8 +42,8 @@ export const startWebSocketServer = () => {
                 await new Promise(resolve => setTimeout(resolve, 10000));
             }
             ws.send('Connection established');
-        } catch (err) {
-            ws.close(1008, 'Invalid Token');
+        } catch (err: any) {
+            ws.close(1008, err);
         }
     });
 }

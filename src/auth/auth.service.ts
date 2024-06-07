@@ -28,7 +28,7 @@ export class AuthService {
             }, (err: any, result: any) => {
                 if (err) {
                     console.error(err);
-                    throw new Error(`Cannot get info about user.`);
+                    reject(err.details);
                 } else {
                     console.log(result);
                     resolve(UserDto.parseFromGrpcResponse(result.user));
