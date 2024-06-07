@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "npx tsc",
-    "start": "npm run build && cp ./protos dist/protos -r && node dist/src/index.js",
-    "dev": "npm run build && nodemon --ignore ./logs/ --files src/index.ts"
+    "start": "rm -r dist/ && npm run build && cp -r ./protos dist/protos -r && node dist/src/index.js",
+    "dev": "rm -r dist/ && npm run build && cp -r ./protos dist/protos && nodemon --ignore ./logs/ --files src/index.ts"
   },
   "keywords": [],
   "author": "",

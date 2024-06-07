@@ -15,7 +15,7 @@ export class OrderService {
             }, (err: any, result: any) => {
                 if (err) {
                     console.error(err);
-                    throw new Error(`Cannot get order by id ${orderId}`);
+                    reject(err);
                 } else {
                     console.log(result);
                     resolve(OrderDto.parseFromGrpcResponse(result.order));
@@ -32,7 +32,7 @@ export class OrderService {
             }, (err: any, result: any) => {
                 if (err) {
                     console.error(err);
-                    throw new Error(`Cannot get orders with filters ${filters}`);
+                    reject(`Cannot get orders with filters ${filters}`);
                 } else {
                     console.log(result);
                     const orders = result.orders.map((order: _com_widedelivery_order_proto_Order__Output) => OrderDto.parseFromGrpcResponse(order));

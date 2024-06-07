@@ -23,6 +23,11 @@ const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: N
             httpReqLogger.error('order service internal error', {req, res});
             return;
         }
+        if (err.code === 3) {
+            res.status(500).json({status: "failed", message: err.details});
+            httpReqLogger.error('order service internal error', {req, res});
+            return;
+        }
         if (!Object.keys(RegistrationErrorsMatcher).map(k => +k).includes(err.code)) {
             const keys = Object.keys(RegistrationErrorsMatcher);
             console.log(keys);
@@ -39,7 +44,7 @@ const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: N
         return;
     }
 
-    res.status(500).json({status: 'failed', message: err.message});
+    res.status(500).json({status: 'failed', message: err});
     httpReqLogger.warn('order service error', {req, res});
 }
 

@@ -12,7 +12,7 @@ export class AuthService {
             }, (err: any, result: any) => {
                 if (err) {
                     console.error(err);
-                    throw new Error(`Cannot login user with email ${email}`);
+                    reject(`Cannot login user with email ${email}`);
                 } else {
                     console.log(result);
                     resolve(UserDto.parseFromGrpcResponse(result.user));

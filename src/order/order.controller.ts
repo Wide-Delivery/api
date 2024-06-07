@@ -62,8 +62,8 @@ export const getOrder = async (req: Request, res: Response, next: NextFunction) 
     try {
         const order = await OrderService.getOrderById(orderId);
         res.status(200).json(order);
-    } catch (e)
-    {
+    }
+    catch (e) {
         next(e)
     }
 }

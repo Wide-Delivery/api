@@ -29,7 +29,7 @@ const connectDriverService = async () => {
                 if (err) {
                     reject(err);
                 }
-                console.info('[Driver service is started!]');
+                console.info('[Driver service is started!] ->', customConfig.driverServiceUrl);
                 resolve();
             });
         });

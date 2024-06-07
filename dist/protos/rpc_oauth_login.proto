@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package auth;
-
-message OAuthSignInInput {
-  string oauth_token = 1;
-  string provider = 2;
-}
