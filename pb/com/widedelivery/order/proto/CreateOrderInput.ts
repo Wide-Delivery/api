@@ -1,10 +1,10 @@
 // Original file: protos/rpc_create_order.proto
 
-import type { UserDTO as _auth_UserDTO, UserDTO__Output as _auth_UserDTO__Output } from '../../../../auth/UserDTO';
+import type { UserDTO as _com_widedelivery_auth_proto_UserDTO, UserDTO__Output as _com_widedelivery_auth_proto_UserDTO__Output } from '../../../../com/widedelivery/auth/proto/UserDTO';
 import type { Timestamp as _google_protobuf_Timestamp, Timestamp__Output as _google_protobuf_Timestamp__Output } from '../../../../google/protobuf/Timestamp';
 
 export interface CreateOrderInput {
-  'user'?: (_auth_UserDTO | null);
+  'user'?: (_com_widedelivery_auth_proto_UserDTO | null);
   'cargo_type'?: (string);
   'cargo_length'?: (number | string);
   'cargo_width'?: (number | string);
@@ -22,7 +22,7 @@ export interface CreateOrderInput {
 }
 
 export interface CreateOrderInput__Output {
-  'user': (_auth_UserDTO__Output | null);
+  'user': (_com_widedelivery_auth_proto_UserDTO__Output | null);
   'cargo_type': (string);
   'cargo_length': (number);
   'cargo_width': (number);

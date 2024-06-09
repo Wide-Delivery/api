@@ -37,6 +37,26 @@ export class AuthService {
         });
     }
 
+    public static async updateUserById(user: UserDto): Promise<UserDto> {
+        const userToUpdateGrpcModel = {
+            user_id: user.id,
+            ...UserDto.getGrpcModel(user)
+        }
+        return new Promise((resolve, reject) => {
+            authService.updateUser({
+                ...userToUpdateGrpcModel
+            }, (err: any, result: any) => {
+                if (err) {
+                    console.error(err);
+                    reject(`Cannot update user with id ${user.id}`);
+                } else {
+                    console.log(result);
+                    resolve(UserDto.parseFromGrpcResponse(result.user));
+                }
+            })
+        });
+    }
+
 
     //
     // static async sendDriverWasLinkedToOrderEmail(order: OrderDto, driverUser: UserDto, user: UserDto) {

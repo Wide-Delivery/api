@@ -12,6 +12,7 @@ export interface ProtoGrpcType {
       auth: {
         proto: {
           GenericResponse: MessageTypeDefinition
+          UpdateUserInput: MessageTypeDefinition
           User: MessageTypeDefinition
           UserDTO: MessageTypeDefinition
           UserResponse: MessageTypeDefinition

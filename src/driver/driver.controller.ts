@@ -8,40 +8,29 @@ import * as grpc from "@grpc/grpc-js";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
 import {DriverTrip} from "./trip";
+import {DriverService} from "./driver.service";
+import {AuthService} from "../auth/auth.service";
+import {UserDto} from "../dto/user.dto";
 
 export const createDriver = async (req: any, res: Response, next: NextFunction) => {
-    // const { mayBeLoader = false, searchRadius = 10, truck } = req.body;
-    // const {
-    //     truckBrand,
-    //     truckModel,
-    //     truckPlate,
-    //     truckSerialNumber,
-    //     truckColor,
-    //     freeSpaceLength,
-    //     freeSpaceWidth,
-    //     freeSpaceHeight,
-    // } = truck;
     const { id: userId } = req.user as { id: string };
-
-    // TODO: Validate if all fields exist (possibly with middleware)
 
     try {
         const driverData = Driver.parseFromHttpBody(req.body);
         driverData.user_id = userId;
 
-        driverService.makeDriverFromUser(driverData, (err: any, result: any) => {
-            if (err) {
-                logger.info('error', { req, res });
-                if (err.code === grpc.status.ALREADY_EXISTS) {
-                    res.status(409).json({status: 'failed', message: 'Driver already exists'});
-                    return;
-                }
-                return next(err);
-            }
-            logger.info('success', { req, res });
-            const response = Driver.parseFromGrpcResponse(result);
-            res.status(201).json(DriverDto.getModel(response));
+        const driver = await DriverService.createDriver(driverData);
+
+        const driverModel = Driver.parseFromGrpcResponse(driver);
+
+        const user = new UserDto({
+            id: userId,
+            role: "DRIVER",
         });
+
+        await AuthService.updateUserById(user);
+
+        res.status(201).json(DriverDto.getModel(driverModel));
     } catch (error) {
         next(error);
     }

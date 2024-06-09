@@ -9,21 +9,6 @@ import {OrderService} from "./order.service";
 import {DriverDto} from "../dto/driver.dto";
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
-    const {
-        cargo_type,
-        cargo_length,
-        cargo_width,
-        cargo_height,
-        departure_longitude,
-        departure_latitude,
-        departure_time,
-        destination_longitude,
-        destination_latitude,
-        destination_time,
-        order_creation_time,
-        description,
-        need_loader
-    } = req.body;
     const user = req.user as UserDto;
     if (!user) {
         res.status(401).json({ message: "Unauthorized" });

@@ -1,4 +1,4 @@
-// Original file: protos/user_dto.proto
+// Original file: protos/user.proto
 
 
 export interface UserDTO {

@@ -24,6 +24,14 @@ export interface Order {
   'driver_id'?: (string);
   'status'?: (_com_widedelivery_order_proto_OrderStatus);
   'current_location'?: (string);
+  'cargo_type'?: (string);
+  'route_encoded'?: (string);
+  'route'?: (string)[];
+  'distance'?: (string);
+  'duration'?: (string);
+  'departure_name'?: (string);
+  'destination_name'?: (string);
+  'price'?: (number | string);
 }
 
 export interface Order__Output {
@@ -47,4 +55,12 @@ export interface Order__Output {
   'driver_id': (string);
   'status': (_com_widedelivery_order_proto_OrderStatus__Output);
   'current_location': (string);
+  'cargo_type': (string);
+  'route_encoded': (string);
+  'route': (string)[];
+  'distance': (string);
+  'duration': (string);
+  'departure_name': (string);
+  'destination_name': (string);
+  'price': (number);
 }

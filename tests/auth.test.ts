@@ -1,12 +1,9 @@
 import authService from "../services/auth.service";
-import {SignUpUserResponse} from "../pb/auth/SignUpUserResponse";
 import request from 'supertest';
 import sinon from 'sinon';
 import {Application} from "express";
 import app from "../src";
-import authServiceClient from "../services/auth.service";
-import anything = jasmine.anything;
-import {string} from "joi";
+import {SignUpUserResponse} from "../pb/com/widedelivery/auth/proto/SignUpUserResponse";
 
 interface SignUpUserInput {
     name: string;
@@ -45,7 +42,7 @@ describe('POST /register', () => {
         };
 
         const expectedResponse: SignUpUserResponse = {
-            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phoneNumber: '+1234567890', provider: 'LOCAL' }
+            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phone_number: '+1234567890', provider: 'LOCAL' }
         };
 
         signUpUserStub.callsArgWith(1, null, expectedResponse);
@@ -76,7 +73,7 @@ describe('POST /register', () => {
         };
 
         const expectedResponse: SignUpUserResponse = {
-            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phoneNumber: '+1234567890', provider: 'LOCAL' }
+            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phone_number: '+1234567890', provider: 'LOCAL' }
         };
 
         signUpUserStub.callsArgWith(1, null, expectedResponse);
@@ -107,7 +104,7 @@ describe('POST /register', () => {
         };
 
         const expectedResponse: SignUpUserResponse = {
-            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phoneNumber: '+1234567890', provider: 'LOCAL' }
+            user: { id: '1', name: 'Test User', email: 'test@example.com', role: 'USER', phone_number: '+1234567890', provider: 'LOCAL' }
         };
 
         signUpUserStub.callsArgWith(1, null, expectedResponse);
