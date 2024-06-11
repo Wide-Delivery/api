@@ -7,11 +7,17 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 };
 
 export interface ProtoGrpcType {
-  auth: {
-    GenericResponse: MessageTypeDefinition
-    User: MessageTypeDefinition
-    UserDTO: MessageTypeDefinition
-    UserResponse: MessageTypeDefinition
+  com: {
+    widedelivery: {
+      auth: {
+        proto: {
+          GenericResponse: MessageTypeDefinition
+          User: MessageTypeDefinition
+          UserDTO: MessageTypeDefinition
+          UserResponse: MessageTypeDefinition
+        }
+      }
+    }
   }
   google: {
     protobuf: {

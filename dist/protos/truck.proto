@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_package = "com.widedelivery.driver.proto";
 
-package driver;
+package com.widedelivery.driver.proto;
 
 message TruckInput {
   string truck_brand = 1;

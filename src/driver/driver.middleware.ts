@@ -16,7 +16,7 @@ export const driverAuth = async (req: Request, res: Response, next: NextFunction
                 if (driverModel) {
                     req.driver = driverModel;
                     resolve();
-                } else reject();
+                } else reject("Driver not found");
             });
         });
 

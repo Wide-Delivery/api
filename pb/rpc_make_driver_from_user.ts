@@ -7,11 +7,17 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 };
 
 export interface ProtoGrpcType {
-  driver: {
-    MakeDriverFromUserInput: MessageTypeDefinition
-    Truck: MessageTypeDefinition
-    TruckInput: MessageTypeDefinition
-    TruckType: EnumTypeDefinition
+  com: {
+    widedelivery: {
+      driver: {
+        proto: {
+          MakeDriverFromUserInput: MessageTypeDefinition
+          Truck: MessageTypeDefinition
+          TruckInput: MessageTypeDefinition
+          TruckType: EnumTypeDefinition
+        }
+      }
+    }
   }
 }
 

@@ -3,6 +3,8 @@ import authService from "../../services/auth.service";
 import {AUTH_PROVIDERS} from "../../constants/auth-constants";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
+import {UserDto} from "../dto/user.dto";
+import {AuthService} from "./auth.service";
 
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,6 +16,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
             email: email,
             password: password,
             provider: AUTH_PROVIDERS.LOCAL,
+            phone_number: phoneNumber
         }, (err: any, result: any) => {
             if (err) {
                 console.error(err); // todo logging
@@ -23,7 +26,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
                 });
             } else {
                 console.log(result); // todo logging
-                res.status(201).json(result);
+                res.status(201).json(UserDto.parseFromGrpcResponse(result.user));
             }
         })
     } catch (e) {
@@ -81,7 +84,6 @@ export const loginOrRegisterOAuth = async (req: Request, res: Response, next: Ne
 
 }
 
-
 export const getMe = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user;
@@ -106,6 +108,23 @@ export const refreshJwtTokens = async (req: Request, res: Response, next: NextFu
             res.status(200).json(result);
         })
 
+    } catch (e) {
+        next(e);
+    }
+}
+
+export const updateUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user as UserDto;
+    const userId = user.id;
+
+    const userToUpdateBody = UserDto.parseFromHttpBody({
+        ...req.body,
+        user_id: userId,
+    });
+
+    try {
+        const updatedUser = await AuthService.updateUserById(userToUpdateBody);
+        res.status(201).json(updatedUser);
     } catch (e) {
         next(e);
     }

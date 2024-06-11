@@ -7,24 +7,32 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 };
 
 export interface ProtoGrpcType {
-  auth: {
-    GenericResponse: MessageTypeDefinition
-    User: MessageTypeDefinition
-    UserDTO: MessageTypeDefinition
-    UserResponse: MessageTypeDefinition
+  com: {
+    widedelivery: {
+      auth: {
+        proto: {
+          GenericResponse: MessageTypeDefinition
+          User: MessageTypeDefinition
+          UserDTO: MessageTypeDefinition
+          UserResponse: MessageTypeDefinition
+        }
+      }
+      order: {
+        proto: {
+          CreateOrderInput: MessageTypeDefinition
+          CreateOrderResponse: MessageTypeDefinition
+          GenericResponse: MessageTypeDefinition
+          Order: MessageTypeDefinition
+          OrderResponse: MessageTypeDefinition
+          OrderStatus: EnumTypeDefinition
+        }
+      }
+    }
   }
   google: {
     protobuf: {
       Timestamp: MessageTypeDefinition
     }
-  }
-  order: {
-    CreateOrderInput: MessageTypeDefinition
-    CreateOrderResponse: MessageTypeDefinition
-    GenericResponse: MessageTypeDefinition
-    Order: MessageTypeDefinition
-    OrderResponse: MessageTypeDefinition
-    OrderStatus: EnumTypeDefinition
   }
 }
 

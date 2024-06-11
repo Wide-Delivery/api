@@ -6,7 +6,7 @@ option java_package = "com.widedelivery.driver.proto";
 import "google/protobuf/timestamp.proto";
 import "order.proto";
 
-package driver;
+package com.widedelivery.driver.proto;
 
 message DriverTrip {
   string trip_id = 1;

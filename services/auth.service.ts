@@ -16,7 +16,7 @@ const packageDefinition = protoLoader.loadSync(
     });
 
 const proto = grpc.loadPackageDefinition(packageDefinition) as unknown as ProtoGrpcType;
-const authServiceClient = new proto.auth.AuthService(customConfig.userServiceUrl,
+const authServiceClient = new proto.com.widedelivery.auth.service.AuthService(customConfig.userServiceUrl,
     grpc.credentials.createInsecure());
 
 const connectAuthService = async () => {

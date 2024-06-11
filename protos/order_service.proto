@@ -1,16 +1,54 @@
 syntax = "proto3";
 
-import "rpc_create_order.proto";
-import "order.proto";
-import "user.proto";
+option java_multiple_files = true;
+option java_package = "com.widedelivery.order.service";
+option java_outer_classname = "OrderProto";
 
-package order;
+package com.widedelivery.order.service;
+
+import "rpc_create_order.proto";
+import "rpc_get_matched_orders.proto";
+import "rpc_add_driver_to_matching.proto";
+import "rpc_remove_driver_from_matching.proto";
+import "rpc_link_driver_with_order.proto";
+import "order.proto";
 
 service OrderService {
-  rpc CreateOrder(CreateOrderInput) returns (CreateOrderResponse) {}
-  rpc GetOrder(GetOrderInput) returns (OrderResponse) {}
+  rpc CreateOrder(com.widedelivery.order.proto.CreateOrderInput) returns (com.widedelivery.order.proto.CreateOrderResponse) {}
+  rpc GetOrder(GetOrderInput) returns (com.widedelivery.order.proto.OrderResponse) {}
+  rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
+  rpc SearchOrders(SearchOrdersRequest) returns (SearchOrdersResponse) {}
+
+  rpc AddDriverForMatching(com.widedelivery.order.proto.AddDriverToMatchingInput) returns (com.widedelivery.order.proto.GenericResponse) {}
+  rpc RemoveDriverFromMatching(com.widedelivery.order.proto.RemoveDriverFromMatchingInput) returns (com.widedelivery.order.proto.GenericResponse) {}
+  rpc GetMatchedOrders(com.widedelivery.order.proto.GetMatchedOrdersInput) returns (stream com.widedelivery.order.proto.GetMatchedOrdersOutput) {}
+
+  rpc LinkDriverWithOrder(com.widedelivery.order.proto.LinkDriverWithOrderInput) returns (com.widedelivery.order.proto.OrderResponse) {}
 }
 
 message GetOrderInput {
   string order_id = 1;
+}
+
+message GetOrdersRequest {
+  int32 page_number = 1;
+  int32 page_size = 2;
+}
+
+message GetOrdersResponse {
+  repeated Order orders = 1;
+  int32 total_pages = 2;
+  int32 current_page = 3;
+}
+
+message SearchOrdersRequest {
+  map<string, string> search_params = 1;
+  int32 page_number = 2;
+  int32 page_size = 3;
+}
+
+message SearchOrdersResponse {
+  repeated Order orders = 1;
+  int32 total_pages = 2;
+  int32 current_page = 3;
 }

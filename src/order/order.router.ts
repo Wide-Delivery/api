@@ -1,14 +1,15 @@
 import express, {Express, Response, Request, NextFunction} from "express";
 import passport from "passport";
-import {createOrder, getOrder} from "./order.controller";
+import {createOrder, getOrder, linkDriverToOrder} from "./order.controller";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
+import {driverAuth} from "../driver/driver.middleware";
 
 const ordersRouter = express.Router();
 
 ordersRouter.post('/', createOrder);
 ordersRouter.get('/:orderId', getOrder);
-// ordersRouter.post('/:orderId/rate', rateOrder);
+ordersRouter.put('/:orderId/accept', driverAuth, linkDriverToOrder);
 
 const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     console.error('[ORDER SERVICE]', err);
@@ -20,6 +21,11 @@ const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: N
         }
         if (err.code === 2) {
             res.status(500).send('Order service error. Check it\'s logs');
+            httpReqLogger.error('order service internal error', {req, res});
+            return;
+        }
+        if (err.code === 3) {
+            res.status(500).json({status: "failed", message: err.details});
             httpReqLogger.error('order service internal error', {req, res});
             return;
         }
@@ -39,7 +45,7 @@ const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: N
         return;
     }
 
-    res.status(500).json({status: 'failed', message: err.message});
+    res.status(500).json({status: 'failed', message: err});
     httpReqLogger.warn('order service error', {req, res});
 }
 

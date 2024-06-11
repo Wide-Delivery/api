@@ -7,8 +7,14 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 };
 
 export interface ProtoGrpcType {
-  driver: {
-    RemoveDriverFromMatchingInput: MessageTypeDefinition
+  com: {
+    widedelivery: {
+      order: {
+        proto: {
+          RemoveDriverFromMatchingInput: MessageTypeDefinition
+        }
+      }
+    }
   }
 }
 
