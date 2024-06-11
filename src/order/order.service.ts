@@ -41,6 +41,26 @@ export class OrderService {
             })
         });
     }
+
+    public static async linkDriverToOrder(orderId: string, driverId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            orderService.linkDriverWithOrder({
+                driver_id: driverId,
+                order_id: orderId,
+            }, (err: any, result: any) => {
+                if (err) {
+                    if (err.details) {
+                        reject(err.details);
+                    }
+                    console.error(err);
+                    reject(`Cannot link driver ${driverId} to order ${orderId}`);
+                } else {
+                    console.log(result);
+                    resolve(OrderDto.parseFromGrpcResponse(result.order));
+                }
+            })
+        });
+    }
     //
     // static async sendDriverWasLinkedToOrderEmail(order: OrderDto, driverUser: UserDto, user: UserDto) {
     //     const data = {

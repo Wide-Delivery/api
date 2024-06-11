@@ -9,8 +9,7 @@ import "order.proto";
 import "driver.proto";
 
 message LinkDriverWithOrderInput {
-  com.widedelivery.driver.proto.DriverExtendedModel driver_extended = 1;
+  string driver_id = 1;
   string order_id = 2;
-  bool send_notification_to_client = 3;
 }
 

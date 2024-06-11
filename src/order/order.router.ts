@@ -3,12 +3,13 @@ import passport from "passport";
 import {createOrder, getOrder, linkDriverToOrder} from "./order.controller";
 import {RegistrationErrorsMatcher} from "../../utils/grpc-http-error-matcher";
 import httpReqLogger from "../../logger";
+import {driverAuth} from "../driver/driver.middleware";
 
 const ordersRouter = express.Router();
 
 ordersRouter.post('/', createOrder);
 ordersRouter.get('/:orderId', getOrder);
-ordersRouter.put('/:orderId/accept', linkDriverToOrder);
+ordersRouter.put('/:orderId/accept', driverAuth, linkDriverToOrder);
 
 const orderServiceErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     console.error('[ORDER SERVICE]', err);

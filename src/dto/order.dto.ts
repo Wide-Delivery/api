@@ -26,6 +26,9 @@ export class OrderDto {
     public destinationName: string;
     public price: number;
 
+    public driverId: string;
+    public status: string;
+
     constructor(data: any) {
         this.id = data.id;
         this.userId = data.userId;
@@ -50,6 +53,8 @@ export class OrderDto {
         this.departureName = data.departureName;
         this.destinationName = data.destinationName;
         this.price = data.price;
+        this.driverId = data.driverId;
+        this.status = data.status;
     }
 
     static parseFromGrpcResponse(response: Order__Output): OrderDto {
@@ -77,6 +82,8 @@ export class OrderDto {
             departureName: response.departure_name,
             destinationName: response.destination_name,
             price: response.price,
+            driverId: response.driver_id,
+            status: response.status,
         });
     }
 

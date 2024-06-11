@@ -1,5 +1,6 @@
 import authService from "../../services/auth.service";
 import {UserDto} from "../dto/user.dto";
+import logger from "../../logger";
 
 export class AuthService {
     constructor() {
@@ -25,6 +26,22 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             authService.getMe({
                 access_token: accessToken
+            }, (err: any, result: any) => {
+                if (err) {
+                    console.error(err);
+                    reject(err.details);
+                } else {
+                    console.log(result);
+                    resolve(UserDto.parseFromGrpcResponse(result.user));
+                }
+            })
+        });
+    }
+
+    public static async getUserById(userId: string): Promise<UserDto> {
+        return new Promise((resolve, reject) => {
+            authService.getUserById({
+                user_id: userId
             }, (err: any, result: any) => {
                 if (err) {
                     console.error(err);
